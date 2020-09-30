@@ -1,0 +1,33 @@
+---
+title: "wrangling_practice"
+author: "Amanda Tsai"
+date: "9/29/2020"
+output: html_document
+---
+
+```{r load}
+library(tidyverse)
+```
+
+```{r data}
+options(tibble.print_min = 3)
+
+litters_data = read_csv("./data/FAS_litters.csv",
+  col_types = "ccddiiii")
+litters_data = janitor::clean_names(litters_data)
+
+pups_data = read_csv("./data/FAS_pups.csv",
+  col_types = "ciiiii")
+pups_data = janitor::clean_names(pups_data)
+head(pups_data)
+
+select(pups_data, litter_number, sex, pd_ears)
+```
+
+```{r chain}
+data = read_csv(file = "./data/FAS_pups.csv") %>% janitor::clean_names() %>% filter(sex == 1) %>% 
+  select(-pd_ears) %>% mutate(seven_more = (pd_pivot >= 7))
+
+head(data)
+```
+
